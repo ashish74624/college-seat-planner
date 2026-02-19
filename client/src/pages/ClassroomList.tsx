@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useApi } from "../api/useApi";
 import type { Classroom } from "../types/classroom";
 import { apiRequest } from "../api/client";
-import { Link } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
+import { Link } from "react-router-dom";
 
 export default function ClassroomList() {
     const { callApi, loading, error } = useApi();
@@ -27,8 +27,9 @@ export default function ClassroomList() {
     return (
         <div className="max-w-4xl mx-auto mt-10 space-y-6">
             {/* Header */}
+            <h1 className="text-4xl mx-auto w-max">SYMB Assignment - Ashish Kumar</h1>
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Classroom List</h1>
+                <h2 className="text-2xl font-bold">Classroom List</h2>
                 <div className="space-x-2">
                     <Link to="/add">
                         <Button>Add Classroom</Button>
