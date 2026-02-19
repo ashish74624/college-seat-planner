@@ -38,23 +38,30 @@ export default function AddClassroom() {
                 }
             />
 
-            <Input
-                type="number"
-                placeholder="Capacity"
-                value={form.capacity}
-                onChange={(e) =>
-                    setForm({ ...form, capacity: Number(e.target.value) })
-                }
-            />
+            <div>
+                <label htmlFor="capacity">Capacity</label>
+                <Input
+                    type="number"
+                    placeholder="Capacity"
+                    value={form.capacity}
+                    onChange={(e) =>
+                        setForm({ ...form, capacity: Number(e.target.value) })
+                    }
+                />
+            </div>
 
-            <Input
-                type="number"
-                placeholder="Floor No"
-                value={form.floorNo}
-                onChange={(e) =>
-                    setForm({ ...form, floorNo: Number(e.target.value) })
-                }
-            />
+            <div>
+                <label htmlFor="floor">Floor No</label>
+                <Input
+                    type="number"
+                    placeholder="Floor No"
+                    value={form.floorNo}
+                    onChange={(e) =>
+                        setForm({ ...form, floorNo: Number(e.target.value) })
+                    }
+                />
+            </div>
+
 
             {/* Near Washroom Checkbox */}
             <div className="flex items-center space-x-2">
@@ -76,6 +83,6 @@ export default function AddClassroom() {
             </Button>
 
             {error && <p className="text-red-500">{error}</p>}
-        </div>
+        </div >
     );
 }
