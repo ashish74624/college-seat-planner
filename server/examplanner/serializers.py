@@ -4,4 +4,4 @@ from .models import Classroom
 class ClassroomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classroom
-        fields = '__all__'
+        fields = "__all__"

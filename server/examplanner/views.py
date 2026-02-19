@@ -1,34 +1,41 @@
-from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from .models import Classroom
 from .serializers import ClassroomSerializer
+from .services import allocate_exam
 
-class ClassroomViewSet(viewsets.ModelViewSet):
-    queryset = Classroom.objects.all()
-    serializer_class = ClassroomSerializer
 
-    @action(detail=False, methods=['post'])
-    def allocate_exam(self, request):
-        total_students = request.data.get('totalStudents')
+class ClassroomListCreateView(APIView):
+
+    def get(self, request):
+        classrooms = Classroom.objects.all()
+        serializer = ClassroomSerializer(classrooms, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ClassroomSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+
+class AllocateExamView(APIView):
+
+    def post(self, request):
+        total_students = request.data.get("totalStudents")
+
         if not total_students:
-            return Response({"error": "totalStudents is required"}, status=400)
-        
-        total_students = int(total_students)
-        # Get classrooms sorted by floorNo ascending and capacity descending
-        classrooms = Classroom.objects.all().order_by('floorNo', '-capacity')
-        allocated = []
-        seats_allocated = 0
-        
-        for room in classrooms:
-            allocated.append({
-                "roomId": room.roomId,
-                "capacity": room.capacity,
-                "floorNo": room.floorNo,
-                "nearWashroom": room.nearWashroom
-            })
-            seats_allocated += room.capacity
-            if seats_allocated >= total_students:
-                return Response({"allocatedClassrooms": allocated})
-        
-        return Response({"error": "Not enough seats available"}, status=400)
+            return Response({"error": "totalStudents required"}, status=400)
+
+        allocated = allocate_exam(int(total_students))
+
+        if not allocated:
+            return Response(
+                {"message": "Not enough seats available"},
+                status=400
+            )
+
+        serializer = ClassroomSerializer(allocated, many=True)
+        return Response(serializer.data)

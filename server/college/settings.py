@@ -53,10 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Allow frontend requests
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React dev server
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'college.urls'
 
