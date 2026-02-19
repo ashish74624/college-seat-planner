@@ -3,18 +3,26 @@ from .models import Classroom
 def allocate_exam(total_students: int):
     classrooms = Classroom.objects.all().order_by('floorNo', '-capacity')
 
-    allocated = []
     remaining = total_students
-    total_capacity = 0
+    allocation_result = []
 
     for room in classrooms:
-        if total_capacity >= total_students:
+        if remaining <= 0:
             break
 
-        allocated.append(room)
-        total_capacity += room.capacity
+        allocated_here = min(room.capacity, remaining)
 
-    if total_capacity < total_students:
-        return None  # Not enough seats
+        allocation_result.append({
+            "id": room.id,
+            "roomId": room.roomId,
+            "floorNo": room.floorNo,
+            "capacity": room.capacity,
+            "allocatedStudents": allocated_here
+        })
 
-    return allocated
+        remaining -= allocated_here
+
+    if remaining > 0:
+        return None
+
+    return allocation_result

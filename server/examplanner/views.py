@@ -40,5 +40,5 @@ class AllocateExamView(APIView):
                 status=400
             )
 
-        serializer = ClassroomSerializer(allocated, many=True)
-        return Response(serializer.data)
+        return Response(allocated)
+
