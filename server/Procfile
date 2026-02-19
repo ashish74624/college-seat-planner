@@ -1,1 +1,1 @@
-web: gunicorn college.wsgi
+gunicorn college.wsgi
