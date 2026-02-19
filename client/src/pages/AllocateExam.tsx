@@ -75,10 +75,6 @@ export default function AllocateExam() {
                         <span className="font-semibold">Rooms Used:</span>{" "}
                         {summary.totalRooms}
                     </p>
-                    <p>
-                        <span className="font-semibold">Total Students Allocated:</span>{" "}
-                        {summary.totalAllocated}
-                    </p>
                 </div>
             )}
 
@@ -106,13 +102,10 @@ export default function AllocateExam() {
 
                                 <div className="text-right">
                                     <div>
-                                        <span className="font-medium">
-                                            {room.allocatedStudents}
-                                        </span>{" "}
-                                        / {room.capacity}
+                                        {room.capacity}
                                     </div>
                                     <div className="text-sm text-gray-500">
-                                        Students Allocated
+                                        Students capacity
                                     </div>
                                 </div>
                             </div>
