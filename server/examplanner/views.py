@@ -5,6 +5,9 @@ from .models import Classroom
 from .serializers import ClassroomSerializer
 from .services import allocate_exam
 
+class TestView(APIView):
+    def get(self,request):
+        return Response("Working !!")
 
 class ClassroomListCreateView(APIView):
 
